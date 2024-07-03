@@ -3,14 +3,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getStudentGrades } from '../../../Services/gradeService';
 
-const ViewGrades = ({ rollNumber }) => {
+const ViewGrades = ({ userId }) => {
   const [studentGrades, setStudentGrades] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchGrades = async () => {
       try {
-        const data = await getStudentGrades(rollNumber);
+        const data = await getStudentGrades( ); 
+        console.log(data)
+        // Assuming userId is the roll number
         setStudentGrades(data);
       } catch (error) {
         console.error('Error fetching grades:', error);
@@ -21,7 +23,7 @@ const ViewGrades = ({ rollNumber }) => {
     };
 
     fetchGrades();
-  }, [rollNumber]);
+  }, [userId]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -34,7 +36,7 @@ const ViewGrades = ({ rollNumber }) => {
       {studentGrades.length === 0 ? (
         <p>No grades available</p>
       ) : (
-        <div className='grade-list'>
+        <div className="grade-list">
           {studentGrades.map((grade) => (
             <div key={grade._id} className="grade-item">
               <p>Name: {grade.name}</p>
